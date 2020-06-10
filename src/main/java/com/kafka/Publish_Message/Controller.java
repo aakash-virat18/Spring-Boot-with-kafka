@@ -13,13 +13,15 @@ public class Controller {
 
 
     @Autowired
-    KafkaTemplate<String,String>  kafkaTemplate;
-    static final String TOPIC = "gfg";
+    KafkaTemplate<String, Student>  kafkaTemplate;
+    static final String TOPIC = "StudentData";
 
-    @GetMapping("publish/{message}")
-    public String publish_message(@PathVariable("message") String message)
-    {
-        kafkaTemplate.send(TOPIC,message);
-        return "Message Published on Kafka !";
+
+    @GetMapping("/publish/{name}")
+    public String post(@PathVariable("name") final String name) {
+
+        kafkaTemplate.send(TOPIC, new Student(1,name, "Yadav"));
+
+        return "Published successfully";
     }
 }
